@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Botecando</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+            #map {
+                height: 100%;
+            }
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .modal{
+                padding-top: 10px
+            }
+            .modal-header, h4, .close {
+                background-color: #f6755e;
+                color:white !important;
+                text-align: center;
+                font-size: 30px;
+            }
+            .modal-footer {
+                background-color: #f56046;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Modal Login Example</h2>
+            <!-- Trigger the modal with a button -->
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding:35px 50px;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                                    <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                                    <input type="text" class="form-control" id="psw" placeholder="Enter password">
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="" checked>Remember me</label>
+                                </div>
+                                <button type="submit" class="button special small fit"><span class="glyphicon glyphicon-off"></span> Login</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                            <p>Not a member? <a href="#">Sign Up</a></p>
+                            <p>Forgot <a href="#">Password?</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <!-- Header -->
+        <header id="header">
+            <nav class="left">
+                <a href="#menu"><span>Menu</span></a>
+            </nav>
+            <a href="index.html" class="logo">Botecando</a>
+            <nav class="right">
+                <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
+            </nav>
+        </header>
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="generic.html">Bares</a></li>
+                <li><a href="elements.html">Restaurantes</a></li>
+            </ul>
+            <ul class="actions vertical">
+                <li> <a href="#" class="button alt">Log in</a></li>
+            </ul>
+
+        </nav>
+        <!-- Banner -->
+        <section id="banner">
+            <div class="content">
+                <h1>Os melhore bares e restaurantes estão aqui</h1>
+                <p>Veja, avalie, comente</p>
+                <ul class="actions">
+                    <li><a href="#one" class="button scrolly">Avaliar</a></li>
+                </ul>
+            </div>
+        </section>
+        <div id="map"></div>
+
+        <footer id="footer">
+            <div class="inner">
+                <h2>Los Texugos</h2>
+                <ul class="actions">
+                    <li><span class="icon fa-phone"></span> <a href="#">(83) 4992-8922</a></li>
+                    <li><span class="icon fa-envelope"></span> <a href="#">lostexugos@email.com</a></li>
+                    <li><span class="icon fa-map-marker"></span> Ponto dos petiscos, Paraiba, Brasil</li>
+                </ul>
+            </div>
+            <div class="copyright">
+                &copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
+            </div>
+        </footer>
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#myBtn").click(function () {
+                    $("#myModal").modal();
+                });
+            });
+        </script>
+        <script>
+            // Note: This example requires that you consent to location sharing when
+            // prompted by your browser. If you see the error "The Geolocation service
+            // failed.", it means you probably did not give permission for the browser to
+            // locate you.
+
+            function initMap() {
+                
+                var myLatLng = {lat: -6.887895, lng: -38.551199};
+            
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: -34.397, lng: 150.644},
+                    zoom: 15
+                });
+                var infoWindow = new google.maps.InfoWindow({map: map});
+                
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'Hello World!'
+                });
+
+
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent('Sua localização atual');
+                        map.setCenter(pos);
+                    }, function () {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    });
+                } else {
+                    // Browser doesn't support Geolocation
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            }
+
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+            }
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94&callback=initMap">
+        </script>
+    </body>
+</html>

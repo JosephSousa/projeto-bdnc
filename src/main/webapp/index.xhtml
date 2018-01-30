@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Botecando</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+           <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94"></script> 
+        
+        <script>
+             $(document).ready(function () {
+                $("#myBtn").click(function () {
+                    $("#myModal").modal();
+                });
+            });
+        </script>
+<!--        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94&callback=initMap">
+        </script>-->
+        <style>
+            .modal{
+                padding-top: 10px
+            }
+            .modal-header, h4, .close {
+                background-color: #f6755e;
+                color:white !important;
+                text-align: center;
+                font-size: 30px;
+            }
+            .modal-footer {
+                background-color: #f56046;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h2>Modal Login Example</h2>
+            <!-- Trigger the modal with a button -->
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding:35px 50px;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <h:form role="form">
+                                <div class="form-group">
+                                    <!--                                    <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                                                                        <input type="text" class="form-control" id="usrname" placeholder="Enter email"/>-->
+                                    <h:outputLabel class="glyphicon glyphicon-user" for="username" value="Nome de usuário: ">
+                                        <h:inputText id="username"
+                                                     value="" 
+                                                     maxlength="50"
+                                                     class="form-control"
+                                                     required="true"
+                                                     requiredMessage="Informe um email valido"/>
+                                    </h:outputLabel>
+                                </div>
+                                <div class="form-group">
+<!--                                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                                    <input type="text" class="form-control" id="psw" placeholder="Enter password"/>-->
+                                    <h:outputLabel class="glyphicon glyphicon-eye-open" for="psw" value="Password ">
+                                        <h:inputText id="psw"
+                                                     value="" 
+                                                     maxlength="50"
+                                                     class="form-control col-md-12"
+                                                     required="true"
+                                                     requiredMessage="senha incorreta"/>
+                                    </h:outputLabel>
+                                </div>
+                                <button type="submit" class="button special small fit"><span class="glyphicon glyphicon-off"></span> Login</button>
+                                  <h:commandButton class="button special small fit"
+                                     value="Login"/>
+                            </h:form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                            <p>Not a member? <a href="#">Sign Up</a></p>
+                            <p>Forgot <a href="#">Password?</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <!-- Header -->
+        <header id="header">
+            <nav class="left">
+                <a href="#menu"><span>Menu</span></a>
+            </nav>
+            <a href="index.html" class="logo">Botecando</a>
+            <nav class="right">
+                <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
+            </nav>
+        </header>
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="generic.html">Bares</a></li>
+                <li><a href="elements.html">Restaurantes</a></li>
+            </ul>
+            <ul class="actions vertical">
+                <li> <a href="#" class="button alt">Log in</a></li>
+            </ul>
+        </nav>
+        <!-- Banner -->
+        <section id="banner">
+            <div class="content">
+                <h1>Os melhore bares e restaurantes estão aqui</h1>
+                <p>Veja, avalie, comente</p>
+                <ul class="actions">
+                    <li><a href="#one" class="button scrolly">Avaliar</a></li>
+                </ul>
+            </div>
+        </section>
+        <p:gmap center="-6.887895 , -38.551199" zoom="15" type="ROADMAP"  style="width:855px;height:400px" />
+        <h:messages id="msgerro"></h:messages>
+
+        <footer id="footer">
+            <div class="inner">
+                <h2>Los Texugos</h2>
+                <ul class="actions">
+                    <li><span class="icon fa-phone"></span> <a href="#">(83) 4992-8922</a></li>
+                    <li><span class="icon fa-envelope"></span> <a href="#">lostexugos@email.com</a></li>
+                    <li><span class="icon fa-map-marker"></span> Ponto dos petiscos, Paraiba, Brasil</li>
+                </ul>
+            </div>
+            <div class="copyright">
+                &copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
+            </div>
+        </footer>
+    </h:body>
+</html>
+
