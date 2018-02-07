@@ -52,7 +52,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     @Override
     public Usuario autentica(String email, String senha) {
          TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE "
-                + "a.email =:email AND a.senha =:senha", Usuario.class);
+                + "u.email =:email AND u.senha =:senha", Usuario.class);
         query.setParameter("email", email.toLowerCase());
         query.setParameter("senha", senha);
         Optional<Usuario> resultado = query.getResultList().stream().findFirst();

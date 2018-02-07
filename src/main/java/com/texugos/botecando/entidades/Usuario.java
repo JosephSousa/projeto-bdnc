@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
  * @brief Classe Usuario
  * @author Joseph Sousa
  * @mail jsantos.te@gmail.com
- * @date   29/01/2018
+ * @date 29/01/2018
  */
 @Entity
 @SequenceGenerator(name = "minha_seq_usuario",
@@ -28,6 +28,15 @@ public class Usuario implements Serializable {
     private String nome;
     private String email;
     private String senha;
+    private boolean logado;
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
 
     public int getID() {
         return ID;

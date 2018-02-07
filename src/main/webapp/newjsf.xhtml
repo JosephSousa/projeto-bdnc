@@ -7,29 +7,38 @@
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94"></script> 
     </h:head> 
     <h:body>
-        <h:form>  
-            <p:gmap id="gmap" center="-6.887895 , -38.551199" zoom="10" type="HYBRID" model="#{infoWindowView.advancedModel}" style="width:100%;height:400px">
+        <h:form>            
+            <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+                 <p:commandButton class="button special small fit" value="Login"><span class="glyphicon glyphicon-off"></span></p:commandButton>
+            </h:outputLink>
 
-                <p:ajax event="overlaySelect" listener="#{infoWindowView.onMarkerSelect}" />
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-                <p:gmapInfoWindow id="infoWindow">
-                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+            <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
 
-                        <p:graphicImage name="/demo/images/antalya/#{infoWindowView.marker.data}" height="150" />
-                        <br />
-                        <h:outputText value="#{infoWindowView.marker.title}" />
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
 
-                    </p:outputPanel>
-                </p:gmapInfoWindow>
-            </p:gmap>
-
-            <!-- Preload for demo -->
-            <p:outputPanel style="display:none">
-                <p:graphicImage name="/demo/images/antalya/konyaalti.png" />
-                <p:graphicImage name="/demo/images/antalya/ataturkparki.png" />
-                <p:graphicImage name="/demo/images/antalya/kaleici.png" />
-                <p:graphicImage name="/demo/images/antalya/karaalioglu.png" />
-            </p:outputPanel>
+                    <f:facet name="footer">
+                        <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
         </h:form>
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
     </h:body>
 </html>
