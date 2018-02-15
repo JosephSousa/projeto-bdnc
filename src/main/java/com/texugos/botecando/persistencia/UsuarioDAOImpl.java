@@ -7,22 +7,26 @@ import java.util.Optional;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 /**
  * @brief Classe UsuarioDAOImpl
  * @author Joseph Sousa
  * @mail jsantos.te@gmail.com
- * @date   30/01/2018
+ * @date 30/01/2018
  */
 @Stateless
 @Remote(UsuarioDAO.class)
-public class UsuarioDAOImpl implements UsuarioDAO{
+public class UsuarioDAOImpl implements UsuarioDAO {
 
-     @PersistenceContext
-    private EntityManager em;
-    
+//    @PersistenceContext
+//    private EntityManager em;
+    private EntityManagerFactory factory = Persistence
+            .createEntityManagerFactory("bdnc-projeto-PU");
+    private EntityManager em = factory.createEntityManager();
+
     @Override
     public void adicionar(Usuario usuario) {
         usuario.setEmail(usuario.getEmail().toLowerCase());
@@ -51,12 +55,12 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override
     public Usuario autentica(String email, String senha) {
-         TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE "
+        TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE "
                 + "u.email =:email AND u.senha =:senha", Usuario.class);
         query.setParameter("email", email.toLowerCase());
         query.setParameter("senha", senha);
         Optional<Usuario> resultado = query.getResultList().stream().findFirst();
-        if(resultado.isPresent()){
+        if (resultado.isPresent()) {
             Usuario usuario = resultado.get();
             return usuario;
         } else {
@@ -66,7 +70,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override
     public boolean verificarEmail(String email) {
-          TypedQuery<Usuario> createQuery = em.createQuery("SELECT u FROM "
+        TypedQuery<Usuario> createQuery = em.createQuery("SELECT u FROM "
                 + "Usuario u WHERE a.email =:email", Usuario.class);
         createQuery.setParameter("email", email);
         Optional<Usuario> findFirst = createQuery.getResultList().stream().findFirst();

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 /**
  * @brief Classe Usuario
@@ -28,8 +29,18 @@ public class Usuario implements Serializable {
     private String nome;
     private String email;
     private String senha;
+    @Transient
     private boolean logado;
 
+    public Usuario() {
+    }
+    
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+    
     public boolean isLogado() {
         return logado;
     }

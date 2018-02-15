@@ -3,8 +3,8 @@ package com.texugos.botecando.service;
 import com.texugos.botecando.entidades.Usuario;
 import com.texugos.botecando.interfaces.UsuarioDAO;
 import com.texugos.botecando.interfaces.UsuarioService;
+import com.texugos.botecando.persistencia.UsuarioDAOImpl;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -19,12 +19,11 @@ import javax.ejb.Stateless;
 public class UsuarioServiceImpl implements UsuarioService{
 
     
-    @EJB
-    private UsuarioDAO usuarioDAO;
+    private UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 
     @Override
     public void salvar(Usuario usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        usuarioDAO.adicionar(usuario);
     }
 
     @Override

@@ -2,8 +2,8 @@ package com.texugos.botecando.controllers;
 
 import com.texugos.botecando.entidades.Usuario;
 import com.texugos.botecando.interfaces.UsuarioService;
+import com.texugos.botecando.service.UsuarioServiceImpl;
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,18 +20,12 @@ import javax.servlet.http.HttpSession;
 @RequestScoped
 public class ControladorUsuario implements Serializable {
 
-    @EJB
-    private UsuarioService usuarioService;
+    private UsuarioService usuarioService = new UsuarioServiceImpl();
     private Usuario usuario = new Usuario();
+    private String nome;
+    private String senha;
+    private String email;
     private HttpSession sessao;
-
-    public UsuarioService getUsuarioService() {
-        return usuarioService;
-    }
-
-    public void setUsuarioService(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -41,19 +35,55 @@ public class ControladorUsuario implements Serializable {
         this.usuario = usuario;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public UsuarioService getUsuarioService() {
+        return usuarioService;
+    }
+
+    public void setUsuarioService(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
+    public String cadastrar() {
+        usuario = new Usuario(nome, email, senha);
+        usuarioService.salvar(usuario);
+        usuario = new Usuario();
+        iniciarSessao();
+        return "home.xhtml";
+    }
+
     public String realizarLogin() {
         Usuario autentica = usuarioService.autenticar(usuario.getEmail(), usuario.getSenha());
         usuario = new Usuario();
         if (autentica != null) {
-            if (autentica.isLogado()) {
-                iniciarSessao();
-                sessao.setAttribute("usuario", autentica);
-                return "home.xhtml";
-            } else {
-                mostrarMensagem("Email e senha invalidos!");
-                return null;
-            }
+            iniciarSessao();
+            sessao.setAttribute("usuario", autentica);
+            return "home.xhtml";
         }
+        mostrarMensagem("Email e senha invalidos!");
         return null;
     }
 

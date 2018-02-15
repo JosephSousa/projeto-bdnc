@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Botecando</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94"></script> 
+    </h:head>
+    <h:body>
+        <div class="container">
+        </div>
+        <!-- Header -->
+        <header id="header">
+            <a href="index.html" class="logo">Botecando</a>
+        </header>
+        <h4>Cadastre-se</h4>
+        <section class="row">
+            
+             <h:form class="form-horizontal box-main-login">
+                    <div class="form-group">
+                        <h:outputLabel class="text-left col-md-12" for="email" value="Email: ">
+                            <h:inputText id="email"
+                                         value="#{controladorUsuario.email}" 
+                                         maxlength="50"
+                                         class="form-control col-md-12"
+                                         required="true"
+                                         requiredMessage="Informe um email valido"/>
+                        </h:outputLabel>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel class="text-left col-md-12" for="nome" value="nome: ">
+                            <h:inputText id="nome" 
+                                           value="#{controladorUsuario.nome}"
+                                           maxlength="20"
+                                           class="form-control col-md-12"
+                                           required="true"
+                                           requiredMessage="Informe um nome"/>
+                        </h:outputLabel>
+                    </div>
+                    <br></br>
+                    <div class="form-group">
+                        <h:outputLabel class="text-left col-md-12" for="senha" value="senha: ">
+                            <h:inputSecret id="senha" 
+                                           value="#{controladorUsuario.senha}"
+                                           maxlength="20"
+                                           class="form-control col-md-12"
+                                           required="true"
+                                           requiredMessage="Informe uma senha valida"/>
+                        </h:outputLabel>
+                    </div>
+                    <br></br>
+                        <h:commandButton class="btn btn-primary"
+                                         immediate="true"
+                                         value="Realizar cadastro"
+                                         style="margin-left: 20px;"
+                                         action="#{controladorUsuario.cadastrar()}"/>
+                        <br></br>
+             </h:form>
+        </section>
+        <footer id="footer">
+            <div class="inner">
+                <h2>Los Texugos</h2>
+                <ul class="actions">
+                    <li><span class="icon fa-phone"></span> <a href="#">(83) 4992-8922</a></li>
+                    <li><span class="icon fa-envelope"></span> <a href="#">lostexugos@email.com</a></li>
+                    <li><span class="icon fa-map-marker"></span> Ponto dos petiscos, Paraiba, Brasil</li>
+                </ul>
+            </div>
+            <div class="copyright">
+                &copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
+            </div>
+        </footer>
+    </h:body>
+</html>
+
