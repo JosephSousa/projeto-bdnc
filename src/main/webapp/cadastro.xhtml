@@ -27,12 +27,11 @@
         </header>
         <h4>Cadastre-se</h4>
         <section class="row">
-            
              <h:form class="form-horizontal box-main-login">
                     <div class="form-group">
                         <h:outputLabel class="text-left col-md-12" for="email" value="Email: ">
                             <h:inputText id="email"
-                                         value="#{controladorUsuario.email}" 
+                                         value="#{controladorUsuario.usuario.email}" 
                                          maxlength="50"
                                          class="form-control col-md-12"
                                          required="true"
@@ -42,7 +41,7 @@
                     <div class="form-group">
                         <h:outputLabel class="text-left col-md-12" for="nome" value="nome: ">
                             <h:inputText id="nome" 
-                                           value="#{controladorUsuario.nome}"
+                                         value="#{controladorUsuario.usuario.nome}"
                                            maxlength="20"
                                            class="form-control col-md-12"
                                            required="true"
@@ -53,7 +52,7 @@
                     <div class="form-group">
                         <h:outputLabel class="text-left col-md-12" for="senha" value="senha: ">
                             <h:inputSecret id="senha" 
-                                           value="#{controladorUsuario.senha}"
+                                           value="#{controladorUsuario.usuario.senha}"
                                            maxlength="20"
                                            class="form-control col-md-12"
                                            required="true"
@@ -62,9 +61,7 @@
                     </div>
                     <br></br>
                         <h:commandButton class="btn btn-primary"
-                                         immediate="true"
                                          value="Realizar cadastro"
-                                         style="margin-left: 20px;"
                                          action="#{controladorUsuario.cadastrar()}"/>
                         <br></br>
              </h:form>

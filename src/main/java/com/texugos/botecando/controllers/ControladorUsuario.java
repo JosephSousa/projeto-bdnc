@@ -21,10 +21,7 @@ import javax.servlet.http.HttpSession;
 public class ControladorUsuario implements Serializable {
 
     private UsuarioService usuarioService = new UsuarioServiceImpl();
-    private Usuario usuario = new Usuario();
-    private String nome;
-    private String senha;
-    private String email;
+    private Usuario usuario = new Usuario() ;
     private HttpSession sessao;
 
     public Usuario getUsuario() {
@@ -35,30 +32,6 @@ public class ControladorUsuario implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
     public UsuarioService getUsuarioService() {
         return usuarioService;
     }
@@ -68,11 +41,11 @@ public class ControladorUsuario implements Serializable {
     }
 
     public String cadastrar() {
-        usuario = new Usuario(nome, email, senha);
+        System.out.println("entrou");
         usuarioService.salvar(usuario);
+        System.out.println("saiu");
         usuario = new Usuario();
-        iniciarSessao();
-        return "home.xhtml";
+        return "index.xhtml";
     }
 
     public String realizarLogin() {

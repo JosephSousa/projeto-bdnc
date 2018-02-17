@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Botecando</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94"></script> 
+    </h:head>
+    <h:body>
+        <div class="container">
+        </div>
+        <!-- Header -->
+        <header id="header">
+            <a href="index.html" class="logo">Botecando</a>
+        </header>
+        <!-- Banner -->
+        <section id="banner">
+            <div class="content">
+                <h1>Os melhore bares e restaurantes estão aqui</h1>
+                <p>Veja, avalie, comente</p>
+                <ul class="actions">
+                    <li><a href="principal.xhtml" class="button scrolly">Avaliar</a></li>
+                </ul>
+            </div>
+        </section>
+        <h:form>  
+            <p:gmap id="gmap" center="-6.887895 , -38.551199" zoom="15" type="ROADMAP"  style="width:100%;height:400px" model="#{infoWindowView.advancedModel}">
+
+                <p:ajax event="overlaySelect" listener="#{infoWindowView.onMarkerSelect}" />
+
+                <p:gmapInfoWindow id="infoWindow">
+                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+                        <p:graphicImage name="/demo/images/antalya/#{infoWindowView.marker.data}" height="150" />
+                        <br />
+                        <h:outputText value="#{infoWindowView.marker.title}" />
+
+                    </p:outputPanel>
+                </p:gmapInfoWindow>
+            </p:gmap>
+
+            <!-- Preload for demo -->
+            <p:outputPanel style="display:none">
+                <p:graphicImage name="/demo/images/antalya/konyaalti.png" />
+                <p:graphicImage name="/demo/images/antalya/ataturkparki.png" />
+                <p:graphicImage name="/demo/images/antalya/kaleici.png" />
+                <p:graphicImage name="/demo/images/antalya/karaalioglu.png" />
+            </p:outputPanel>
+        </h:form>
+        <h:messages id="msgerro"></h:messages>
+        <footer id="footer">
+            <div class="inner">
+                <h2>Los Texugos</h2>
+                <ul class="actions">
+                    <li><span class="icon fa-phone"></span> <a href="#">(83) 4992-8922</a></li>
+                    <li><span class="icon fa-envelope"></span> <a href="#">lostexugos@email.com</a></li>
+                    <li><span class="icon fa-map-marker"></span> Ponto dos petiscos, Paraiba, Brasil</li>
+                </ul>
+            </div>
+            <div class="copyright">
+                &copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
+            </div>
+        </footer>
+    </h:body>
+</html>
+

@@ -11,10 +11,10 @@ import java.util.List;
  */
 public interface UsuarioDAO {
 
-    void adicionar(Usuario usuario);
-    void remover(Usuario usuario);
-    void atualizar(Usuario usuario);
-    List<Usuario> listarTodos();
+    boolean salvar(Usuario usuario);
+    boolean remover(Usuario usuario);
+    boolean atualizar(Usuario usuario);
+    List<Usuario> todosUsuarios();
     Usuario buscarPorId(int id);
     Usuario autentica(String email, String senha);
     boolean verificarEmail(String email);

@@ -1,12 +1,6 @@
 package com.texugos.botecando.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
 /**
  * @brief Classe Estabelecimento
@@ -14,17 +8,11 @@ import javax.persistence.SequenceGenerator;
  * @mail jsantos.te@gmail.com
  * @date   29/01/2018
  */
-@Entity
-@SequenceGenerator(name = "minha_seq_estabelecimento",
-        sequenceName = "seq_estabelecimento",
-        initialValue = 1,
-        allocationSize = 1)
+
 public class Estabelecimento implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "minha_seq_estabelecimento", strategy = GenerationType.SEQUENCE)
+    
     private int ID;
-    @Column(length = 50, nullable = false)
     private String nome;
     private String latitude;
     private String Longitude;
@@ -33,12 +21,12 @@ public class Estabelecimento implements Serializable {
     public Estabelecimento() {
     }
 
-    public Estabelecimento(String nome, String latitude, String Longitude) {
+    public Estabelecimento(int ID, String nome, String latitude, String Longitude) {
+        this.ID = ID;
         this.nome = nome;
         this.latitude = latitude;
         this.Longitude = Longitude;
     }
-
     public int getClassificacao() {
         return classificacao;
     }

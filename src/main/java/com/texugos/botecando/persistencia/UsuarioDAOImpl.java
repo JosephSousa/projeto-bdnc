@@ -2,14 +2,16 @@ package com.texugos.botecando.persistencia;
 
 import com.texugos.botecando.entidades.Usuario;
 import com.texugos.botecando.interfaces.UsuarioDAO;
+import com.texugos.connection.ConexaoBD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @brief Classe UsuarioDAOImpl
@@ -17,68 +19,118 @@ import javax.persistence.TypedQuery;
  * @mail jsantos.te@gmail.com
  * @date 30/01/2018
  */
-@Stateless
-@Remote(UsuarioDAO.class)
+
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-//    @PersistenceContext
-//    private EntityManager em;
-    private EntityManagerFactory factory = Persistence
-            .createEntityManagerFactory("bdnc-projeto-PU");
-    private EntityManager em = factory.createEntityManager();
+    private final ConexaoBD conex = new ConexaoBD();
 
+    private final Connection connection;
+    
+     public UsuarioDAOImpl() {
+        connection = conex.getConnection();
+    }
+     
     @Override
-    public void adicionar(Usuario usuario) {
-        usuario.setEmail(usuario.getEmail().toLowerCase());
-        em.persist(usuario);
+     public boolean salvar(Usuario usuario) {
+        try {
+            PreparedStatement prepareStatement = connection.prepareStatement("INSERT into usuario(nome,email,senha)VALUES (?,?,?)");
+            prepareStatement.setString(1, usuario.getNome());
+            prepareStatement.setString(2, usuario.getEmail());
+            prepareStatement.setString(3, usuario.getSenha());
+            return prepareStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
-    public void remover(Usuario usuario) {
-        em.remove(buscarPorId(usuario.getID()));
+    public boolean remover(Usuario usuario) {
+        try {
+            PreparedStatement prepareStatement = connection.prepareStatement("DELETE FROM cliente WHERE id=?");
+            prepareStatement.setInt(1, usuario.getID());
+            prepareStatement.execute();
+            return prepareStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
-    public void atualizar(Usuario usuario) {
-        em.merge(usuario);
+    public boolean atualizar(Usuario usuario) {
+        try {
+            PreparedStatement prepareStatement = connection.prepareStatement("UPDATE cliente set nome=?, email=? WHERE id=?");
+            prepareStatement.setString(1, usuario.getNome());
+            prepareStatement.setString(2, usuario.getEmail());
+            prepareStatement.setInt(3, usuario.getID());
+            return prepareStatement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
-    public List<Usuario> listarTodos() {
-        return em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+    public List<Usuario> todosUsuarios() {
+        try {
+            List<Usuario> usuarios = new ArrayList<>();
+
+            ResultSet result = consultarTodosOsUsuarios();
+
+            while (result.next()) {
+                usuarios.add(criarUsuario(result));
+            }
+            return usuarios;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(com.texugos.botecando.persistencia.UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
     }
 
+    private ResultSet consultarTodosOsUsuarios() throws SQLException {
+        PreparedStatement prepareStatement = connection.prepareStatement("Select * from usuario");
+        ResultSet result = prepareStatement.executeQuery();
+        return result;
+    }
+
+    private Usuario criarUsuario(ResultSet result) throws SQLException {
+        int id = result.getInt("id");
+        String nome = result.getString("nome");
+        String email = result.getString("email");
+        String senha=result.getString("senha");
+        return new Usuario(id, nome, email,senha);
+    }
+    
     @Override
     public Usuario buscarPorId(int id) {
-        return em.find(Usuario.class, id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Usuario autentica(String email, String senha) {
-        TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE "
-                + "u.email =:email AND u.senha =:senha", Usuario.class);
-        query.setParameter("email", email.toLowerCase());
-        query.setParameter("senha", senha);
-        Optional<Usuario> resultado = query.getResultList().stream().findFirst();
-        if (resultado.isPresent()) {
-            Usuario usuario = resultado.get();
-            return usuario;
-        } else {
-            return null;
+         Usuario usuarioRetorno = null;
+        try {
+            PreparedStatement prepareStatement = connection.prepareStatement("SELECT * FROM usuario WHERE email='"+email+"'"+ "and senha='"+senha+"'");
+            ResultSet result = prepareStatement.executeQuery();
+            if (result.next()) {
+                usuarioRetorno = new Usuario();
+                usuarioRetorno.setID(result.getInt("id"));
+                usuarioRetorno.setNome(result.getString("nome"));
+                usuarioRetorno.setEmail(result.getString("email"));
+                usuarioRetorno.setSenha(result.getString("senha"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return usuarioRetorno;
     }
+    
 
     @Override
     public boolean verificarEmail(String email) {
-        TypedQuery<Usuario> createQuery = em.createQuery("SELECT u FROM "
-                + "Usuario u WHERE a.email =:email", Usuario.class);
-        createQuery.setParameter("email", email);
-        Optional<Usuario> findFirst = createQuery.getResultList().stream().findFirst();
-        if (findFirst.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

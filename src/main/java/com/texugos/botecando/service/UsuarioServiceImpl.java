@@ -5,8 +5,6 @@ import com.texugos.botecando.interfaces.UsuarioDAO;
 import com.texugos.botecando.interfaces.UsuarioService;
 import com.texugos.botecando.persistencia.UsuarioDAOImpl;
 import java.util.List;
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 
 /**
  * @brief Classe UsuarioService
@@ -14,16 +12,17 @@ import javax.ejb.Stateless;
  * @mail jsantos.te@gmail.com
  * @date   07/02/2018
  */
-@Stateless
-@Remote(UsuarioService.class)
 public class UsuarioServiceImpl implements UsuarioService{
 
     
     private UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 
+    public UsuarioServiceImpl() {
+    }
+    
     @Override
     public void salvar(Usuario usuario) {
-        usuarioDAO.adicionar(usuario);
+        usuarioDAO.salvar(usuario);
     }
 
     @Override

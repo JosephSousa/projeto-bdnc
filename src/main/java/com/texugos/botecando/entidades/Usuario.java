@@ -15,32 +15,25 @@ import javax.persistence.Transient;
  * @mail jsantos.te@gmail.com
  * @date 29/01/2018
  */
-@Entity
-@SequenceGenerator(name = "minha_seq_usuario",
-        sequenceName = "seq_usuario",
-        initialValue = 1,
-        allocationSize = 1)
+
 public class Usuario implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "minha_seq_usuario", strategy = GenerationType.SEQUENCE)
     private int ID;
-    @Column(length = 50, nullable = false)
     private String nome;
     private String email;
     private String senha;
-    @Transient
     private boolean logado;
 
     public Usuario() {
     }
-    
-    public Usuario(String nome, String email, String senha) {
+
+    public Usuario(int ID, String nome, String email, String senha) {
+        this.ID = ID;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
-    
+   
     public boolean isLogado() {
         return logado;
     }

@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface EstabelecimentoDAO {
     
-    void adicionar(Estabelecimento estabelecimento);
-    void remover(Estabelecimento estabelecimento);
-    void atualizar(Estabelecimento estabelecimento);
+    boolean adicionar(Estabelecimento estabelecimento);
+    boolean remover(Estabelecimento estabelecimento);
+    boolean atualizar(Estabelecimento estabelecimento);
     List<Estabelecimento> listarTodos();
     Estabelecimento buscarPorId(int id);
 }
