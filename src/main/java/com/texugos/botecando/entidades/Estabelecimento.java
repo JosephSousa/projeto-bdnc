@@ -14,14 +14,14 @@ public class Estabelecimento implements Serializable {
     
     private int ID;
     private String nome;
-    private String latitude;
-    private String Longitude;
+    private double latitude;
+    private double Longitude;
     private int classificacao=0;
 
     public Estabelecimento() {
     }
 
-    public Estabelecimento(int ID, String nome, String latitude, String Longitude) {
+    public Estabelecimento(int ID, String nome, double latitude, double Longitude) {
         this.ID = ID;
         this.nome = nome;
         this.latitude = latitude;
@@ -51,19 +51,19 @@ public class Estabelecimento implements Serializable {
         this.nome = nome;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return Longitude;
     }
 
-    public void setLongitude(String Longitude) {
+    public void setLongitude(double Longitude) {
         this.Longitude = Longitude;
     }
 

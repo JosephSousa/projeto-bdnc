@@ -19,6 +19,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBRngUbErxBeoBn7kBAqjrj28akhK6q94"></script> 
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
     </h:head>
     <h:body>
         <div class="container">
@@ -37,7 +39,18 @@
                 </ul>
             </div>
         </section>
-        <p:gmap center="-6.887895 , -38.551199" zoom="15" type="ROADMAP"  style="width:100%;height:400px" />
+        <h:form>  
+            <p:gmap widgetVar="w_gmap" id="gmap" center="-6.887895 , -38.551199" zoom="15" type="ROADMAP"  style="width:100%;height:400px" model="#{infoWindowView.advancedModel}">
+
+                <p:ajax event="overlaySelect" listener="#{infoWindowView.onMarkerSelect}" />
+
+                <p:gmapInfoWindow id="infoWindow">
+                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+                        <h:outputText value="#{infoWindowView.marker.title}" />
+                    </p:outputPanel>
+                </p:gmapInfoWindow>
+            </p:gmap>
+        </h:form>
         <h:messages id="msgerro"></h:messages>
         <footer id="footer">
             <div class="inner">
@@ -52,6 +65,33 @@
                 &copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
             </div>
         </footer>
+        <script type="text/javascript">
+            if (navigator.geolocation) {
+                checkGeolocationByHTML5();
+            } else {
+                checkGeolocationByLoaderAPI(); // HTML5 not supported! Fall back to Loader API.
+            }
+
+            function checkGeolocationByHTML5() {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    setMapCenter(position.coords.latitude, position.coords.longitude);
+                }, function () {
+                    checkGeolocationByLoaderAPI(); // Error! Fall back to Loader API.
+                });
+            }
+
+            function checkGeolocationByLoaderAPI() {
+                if (google.loader.ClientLocation) {
+                    setMapCenter(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+                } else {
+                    // Unsupported! Show error/warning?
+                }
+            }
+
+            function setMapCenter(latitude, longitude) {
+                w_gmap.getMap().setCenter(new google.maps.LatLng(latitude, longitude));
+            }
+        </script>
     </h:body>
 </html>
 

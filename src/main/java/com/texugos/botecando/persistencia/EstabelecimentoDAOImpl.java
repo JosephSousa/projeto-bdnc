@@ -33,14 +33,14 @@ public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
     @Override
     public boolean adicionar(Estabelecimento estabelecimento) {
         try {
-            PreparedStatement prepareStatement = connection.prepareStatement("INSERT into estabelecimento(nome,latitude,longitude,classificacao)VALUES (?,?,?,?)");
+            PreparedStatement prepareStatement = connection.prepareStatement("INSERT into estabelecimento(nome,lat,lng,classificacao)VALUES (?,?,?,?)");
             prepareStatement.setString(1, estabelecimento.getNome());
-            prepareStatement.setString(2, estabelecimento.getLatitude());
-            prepareStatement.setString(3, estabelecimento.getLongitude());
+            prepareStatement.setDouble(2, estabelecimento.getLatitude());
+            prepareStatement.setDouble(3, estabelecimento.getLongitude());
             prepareStatement.setInt(4, estabelecimento.getClassificacao());
             return prepareStatement.executeUpdate() > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         return false;
     }
@@ -82,8 +82,8 @@ public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
     private Estabelecimento criarEstabelecimento(ResultSet result) throws SQLException {
         int id = result.getInt("id");
         String nome = result.getString("nome");
-        String latitude = result.getString("latitude");
-        String longitude = result.getString("longitude");
+        double latitude = result.getDouble("lat");
+        double longitude = result.getDouble("lng");
         return new Estabelecimento(id, nome, latitude, longitude);
     }
 

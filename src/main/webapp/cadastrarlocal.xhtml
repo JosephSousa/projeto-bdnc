@@ -25,42 +25,32 @@
         </div>
         <!-- Header -->
         <header id="header">
-             <nav class="left">
-                <a href="#menu"><span>Menu</span></a>
-            </nav>
             <a href="index.html" class="logo">Botecando</a>
         </header>
-        <!-- Menu -->
-        <nav id="menu">
-            <ul class="links">
-                <li><a href="index.xhtml">Início</a></li>
-                <li><a href="cadastrarlocal.xhtml">cadastrar local</a></li>
-                <li><a href="elements.html">Restaurantes</a></li>
-            </ul>
-        </nav>
-        <!-- Banner -->
-        <section id="banner">
-            <div class="content">
-                <h1>Os melhore bares e restaurantes estão aqui</h1>
-                <p>Veja, avalie, comente</p>
-                <ul class="actions">
-                    <li><a href="avaliar.xhtml" class="button scrolly">Avaliar</a></li>
-                </ul>
-            </div>
-        </section>
-        <h:form>  
-            <p:gmap id="gmap" center="-6.887895 , -38.551199" zoom="15" type="ROADMAP"  style="width:100%;height:400px" model="#{infoWindowView.advancedModel}">
+        <script type="text/javascript">
+            function geocode() {
+                PF('geoMap').geocode(document.getElementById('address').value);
+            }
+        </script>
 
-                <p:ajax event="overlaySelect" listener="#{infoWindowView.onMarkerSelect}" />
+        <h:form prependId="false">
+            <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="nome" value="nome:" />
+                <p:inputText id="nome" value="#{geocodeView.estabelecimento.nome}"/>
+                <p:outputLabel for="address" value="Endereço:" />
+                <p:inputText id="address" />
+                <p:commandButton value="Geocode" icon="ui-icon-search" onclick="geocode()" type="button" />
+            </h:panelGrid>
 
-                <p:gmapInfoWindow id="infoWindow">
-                    <p:outputPanel style="text-align: center; display: block; margin: auto">
-                        <h:outputText value="#{infoWindowView.marker.title}" />
-                    </p:outputPanel>
-                </p:gmapInfoWindow>
+            <p:gmap id="geoGmap" widgetVar="geoMap" center="#{geocodeView.centerGeoMap}" zoom="2" type="ROADMAP" model="#{geocodeView.geoModel}" style="width:100%;height:400px">
+                <p:ajax event="geocode" listener="#{geocodeView.onGeocode}" update="@this" />
             </p:gmap>
+            <br></br>
+            <h:commandButton class="btn btn-primary"
+                             value="Realizar cadastro"
+                             action="#{geocodeView.adicionar()}"/>
         </h:form>
-        <h:messages id="msgerro"></h:messages>
+
         <footer id="footer">
             <div class="inner">
                 <h2>Los Texugos</h2>
